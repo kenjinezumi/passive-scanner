@@ -1,5 +1,7 @@
 use rocket::form::Form;
 use rocket::State;
+use rocket::response::content::Html; // Add this import
+
 use reqwest::blocking::Client;
 use serde::{Serialize};
 use rocket::serde::json::Json;
@@ -20,12 +22,12 @@ pub struct ScanResult {
 }
 
 pub struct ClientManager {
-    client: Client,
+    pub client: Client,
 }
 
 #[get("/")]
-pub fn index() -> &'static str {
-    "Welcome to the Passive Scanner Web Application!"
+pub fn index() -> Html<&'static str> {
+    Html(include_str!("../static/index.html"))
 }
 
 #[post("/scan", data = "<scan_form>")]
@@ -54,14 +56,6 @@ pub fn scan(scan_form: Form<ScanForm>, client_manager: &State<ClientManager>) ->
     })
 }
 
-#[rocket::main]
-async fn main()  {
-    let client = Client::new();
-    let client_manager = ClientManager { client };
 
-    rocket::build()
-        .mount("/", routes![index, scan])
-        .manage(client_manager)
-        .launch();
-}
+
 

@@ -1,0 +1,19 @@
+<!-- static/index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Passive Scanner Web Application</title>
+</head>
+<body>
+    <h1>Welcome to the Passive Scanner Web Application!</h1>
+    <form action="/scan" method="post">
+        <label for="url">Enter URL:</label>
+        <input type="text" id="url" name="url">
+        <button type="submit">Scan</button>
+    </form>
+    <div id="result">
+        <h2>Scan Result:</h2>
+        <p>{{ result }}</p>
+    </div>
+</body>
+</html>
